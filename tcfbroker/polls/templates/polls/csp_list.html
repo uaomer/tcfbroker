@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Cloud Service Provider List</title></head><body>
+  
+<form method="post" action="select_provider.html" name="provider_list">
+
+ {% for profile in latest_profile %}
+		<input name="provider_name" type="checkbox"> {{profile.name_text}}<br>     
+    {% endfor %}
+
+
+
+   <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+
+</form>
+
+
+</body></html>

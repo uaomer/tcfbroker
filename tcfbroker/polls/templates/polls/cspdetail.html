@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>CSP Detail</title>
+
+  
+</head><body>
+<table style="text-align: left; width: 1045px; height: 140px;" border="0" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><h1>{{select_profile.name_text }}</h1> <br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">{{ select_profile.detail_info }}<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table style="text-align: left; height: 52px; width: 702px;" border="0" cellpadding="2" cellspacing="2">
+
+  <tbody>
+   
+    <tr>
+      <td style="vertical-align: top; width: 50px;">Sr.No.<br>
+      </td>
+      <td style="vertical-align: top; width: 130px;">&nbsp;Resource Name<br>
+      </td>
+      <td style="vertical-align: top; width: 133px;">Resource Type<br>
+      </td>
+      <td style="vertical-align: top; width: 91px;">Value<br>
+      </td>
+      <td style="vertical-align: top; width: 125px;">Unit <br>
+      </td>
+      <td style="vertical-align: top; width: 171px;">Availability<br>
+      </td>
+    </tr>
+   {% for resource in all_resources %}
+   
+    <tr>
+      <td style="vertical-align: top;">{{forloop.counter}}<br>
+      </td>
+      <td style="vertical-align: top;">{{resource.rname}}<br>
+      </td>
+      <td style="vertical-align: top;">{{resource.rtype}}<br>
+      </td>
+      <td style="vertical-align: top;">{{resource.rvalue}}<br>
+      </td>
+      <td style="vertical-align: top;">{{resource.runit}}<br>
+      </td>
+      <td style="vertical-align: top;">{{resource.ravail}}<br>
+      </td>
+    </tr>
+ {% endfor %}
+  </tbody>
+</table>
+
+<br>
+
+<br>
+</body></html>

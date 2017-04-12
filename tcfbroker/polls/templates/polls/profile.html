@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>profile</title>
+
+  
+  
+  <style type="text/css"></style>
+</head><body style="height: 242px;">
+{% csrf_token %}
+<table style="text-align: left; width: 494px; height: 144px;" border="0" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: middle; width: 152px; text-align: center;"><img style="width: 110px; height: 123px;" alt="" title="Logo" src="file:///C:/Users/Peterpan/workspace/tcfbroker/tcfbroker/polls/templates/polls/images/logo.jpg">&nbsp;<big><big><big><span style="font-weight: bold;"> </span></big></big></big></td>
+      <td style="vertical-align: middle; width: 883px; text-align: left;"><big><big><big><span style="font-weight: bold;"><span style="color: rgb(0, 0, 102);">Cloud
+Profile Manager</span></span></big></big></big></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<br>
+
+<table>
+
+</table>
+
+{% if all_profile %}
+<form method="post" action="csp_detail.html" name="csp_list">
+  <table style="text-align: left; width: 995px; height: 43px;" border="0" cellpadding="2" cellspacing="2">
+    <tbody>
+	{% for profile in all_profile %} 
+      <tr>
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> 
+        <input name="{{profile.id}}" value="{{profile.id}}" type="checkbox">
+        </td>
+        <td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
+       
+       	
+       <a href="{% url 'polls:cspdetail' profile.id %}">	{{profile.name_text}}
+       	
+       	</td>
+       	
+       	<td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
+       	{{profile.meta_text}}
+       	</td>
+       	<td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
+       	{{profile.endpoint_text}}
+       	</td>
+       	<td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
+       	{{profile.caiq_score}}
+       	</td>
+       	
+       	
+       	 <!--  	<input type= readonly="readonly" name="{{profile.name_text}}" value="{{profile.name_text}}">
+        </td>
+        <td style="vertical-align: middle; width: 186px; height: 39px;">
+        	<input value="{{profile.meta_text}}" name="{{profile.meta_text}}">
+        </td>
+        <td style="vertical-align: middle; width: 186px; height: 39px;">
+        	<input readonly="readonly" name="{{profile.endpoint_text}}" value="{{profile.endpoint_text}}">
+        </td>
+        <td style="vertical-align: middle; width: 186px; height: 39px;">
+        	<input readonly="readonly" name="{{profile.caiq_score}}" value="{{profile.caiq_score}}">
+        </td>
+         -->
+         
+      </tr>
+  	{%endfor%}
+   
+   </tbody>
+  </table>
+</form>
+
+{% else %}
+<p>No Profiles are available.</p>
+{% endif %}
+<br>
+
+<br>
+
+<br>
+
+</body></html>

@@ -1,0 +1,16 @@
+<h1>{{ select_profile.name_text }}</h1>
+
+
+{{ select_profile.detail_info }}
+
+{% for resource in all_resources %}
+
+{{resource.rname}} <br>
+{{resource.rvalue}} <br>
+
+{% endfor %}
+
+
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
