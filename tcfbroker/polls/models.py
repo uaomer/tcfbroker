@@ -4,18 +4,26 @@ from django.utils.encoding import python_2_unicode_compatible
 import datetime
 from django.utils import timezone
 from django.template.defaultfilters import default
+from _overlapped import NULL
 #from unittest.util import _MAX_LENGTH
 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Question(models.Model):
     # ...
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
     
+    question_code = models.CharField(max_length=50, unique=True, default=NULL)
+    question_text = models.CharField(max_length=300)
+    q_phy = models.CharField(max_length=10, default=NULL) 
+    q_net = models.CharField(max_length=10, default=NULL)
+    q_comp = models.CharField(max_length=10, default=NULL)
+    q_sto = models.CharField(max_length=10, default=NULL)
+    q_app = models.CharField(max_length=10, default=NULL)
+    q_data = models.CharField(max_length=10, default=NULL)
+        
     def __str__(self):
         return self.question_text
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+   # def was_published_recently(self):
+   #     return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Choice(models.Model):

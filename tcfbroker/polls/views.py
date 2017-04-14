@@ -1,14 +1,15 @@
-#from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
+from ._compact import JsonResponse 
 from django.urls import reverse
 #from django.views import generic
 from django.template import loader
-
+from django import forms
+import django_excel as excel
 
 from .models import Choice, Question, Profile, Resource
-import profile
+
+
 
 # with template 
 def index(request):
@@ -76,10 +77,23 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-#class ProfileView(generic.DetailView):
-#   template_name = 'polls/profile.html'
-#    context_object_name = 'cloud_profile'
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
 
-   # def get_queryset(self):
-    #    """Return the last five published questions."""
-     #   return Question.objects.order_by('-pub_date')[:5]
+
+
+def import_sheet(request):
+    if request.method == "POST":
+        form = UploadFileForm(request.POST,
+                              request.FILES)
+        if form.is_valid():
+            request.FILES['file'].save_to_database(
+                model=Question,
+                mapdict=['question_code','question_text', 'q_phy', 'q_net', 'q_comp','q_sto','q_app','q_data'])
+            return HttpResponse("OK")
+
+        else:
+            return HttpResponseBadRequest()
+    else:
+        form = UploadFileForm()
+    return render(request, 'polls/upload_form.html', {'form': form})    

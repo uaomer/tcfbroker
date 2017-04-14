@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^profile/$', views.profile, name='profile'),
    # url(r'^csp_list/$', views.profile, name='csp_list'),  
     url(r'^profile/(?P<profile_id>[0-9]+)/$', views.cspdetail, name='cspdetail'),
+    url(r'^import_sheet/', views.import_sheet, name="import_sheet")
 ]
