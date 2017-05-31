@@ -12,10 +12,19 @@
     <tr>
       <td style="vertical-align: top;"><h1>{{select_profile.name_text }}</h1> <br>
       </td>
+      <td style="vertical-align: top;">
+ I have positive answers = {{yes_assessment}} <br>
+ </td> 
     </tr>
+    
     <tr>
       <td style="vertical-align: top;">{{ select_profile.detail_info }}<br>
       </td>
+  <td style="vertical-align: top;"> I have negative answers = {{no_assessment}} <br>
+      </td>
+
+
+ I have Not Applicable =  {{na_assessment}} <br> 
     </tr>
   </tbody>
 </table>
@@ -40,6 +49,8 @@
       <td style="vertical-align: top; width: 171px;">Availability<br>
       </td>
     </tr>
+   
+   
    {% for resource in all_resources %}
    
     <tr>
@@ -57,6 +68,8 @@
       </td>
     </tr>
  {% endfor %}
+ 
+
   </tbody>
 </table>
 

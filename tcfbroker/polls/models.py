@@ -9,9 +9,8 @@ from _overlapped import NULL
 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Question(models.Model):
-    # ...
-    
-    question_code = models.CharField(max_length=50, unique=True, default=NULL)
+   
+    id = models.CharField(max_length=50, primary_key=True, default=NULL)
     question_text = models.CharField(max_length=300)
     q_phy = models.CharField(max_length=10, default=NULL) 
     q_net = models.CharField(max_length=10, default=NULL)
@@ -22,24 +21,17 @@ class Question(models.Model):
         
     def __str__(self):
         return self.question_text
-   # def was_published_recently(self):
-   #     return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
-
-@python_2_unicode_compatible  # only if you need to support Python 2
+   
 class Choice(models.Model):
     # ...
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    choice_text = models.CharField(max_length=50)
     
     def __str__(self):
         return self.choice_text
 
 class Profile(models.Model):
     # ...
-#    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     name_text = models.CharField(max_length=200)
-    #models.CharField(_MAX_LENGTH=200)
     endpoint_text = models.CharField(max_length=200)
     meta_text = models.CharField(max_length=200)
     detail_info = models.TextField(default='')
@@ -51,7 +43,6 @@ class Profile(models.Model):
 class Resource(models.Model):
     
     cloud = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    
     rname = models.CharField(max_length=200)
     rtype = models.CharField(max_length=100)
     rvalue = models.CharField(max_length=100)
@@ -60,16 +51,27 @@ class Resource(models.Model):
     rpub_date = models.DateTimeField('date published')
     
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        return self.rpub_date >= timezone.now() - datetime.timedelta(days=1)
     
     def __str__(self):
         return self.rname
     
+
+class Assessment(models.Model): 
+    acloud = models.ForeignKey(Profile, on_delete=models.CASCADE, default=NULL)
+    aquestion= models.ForeignKey(Question, on_delete=models.CASCADE)    
+    ayes = models.CharField(max_length=10, null=True, blank=True)
+    ano = models.CharField(max_length=10, null=True, blank=True)
+    ana = models.CharField(max_length=10, null=True, blank=True)
+    
+    def __unicode__(self):
+        return self.name
+    #def __str__(self):
+    #    return self.rname
     
     
     
-    
-    
-    
-    
-    
+class MonthlyWeatherByCity(models.Model):
+    month = models.IntegerField()
+    boston_temp = models.DecimalField(max_digits=5, decimal_places=1)
+    houston_temp = models.DecimalField(max_digits=5, decimal_places=1)    

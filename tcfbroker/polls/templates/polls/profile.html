@@ -13,10 +13,12 @@
 
   <tbody>
     <tr>
-      <td style="vertical-align: middle; width: 152px; text-align: center;"><img style="width: 110px; height: 123px;" alt="" title="Logo" src="file:///C:/Users/Peterpan/workspace/tcfbroker/tcfbroker/polls/templates/polls/images/logo.jpg">&nbsp;<big><big><big><span style="font-weight: bold;"> </span></big></big></big></td>
+      <td style="vertical-align: middle; width: 152px; text-align: center;"><img style="width: 110px; height: 123px;" alt="" title="Logo" src="file:///C:/Users/Peterpan/git/tcfbroker/tcfbroker/polls/templates/polls/images/logo.jpg">&nbsp;<big><big><big><span style="font-weight: bold;"> </span></big></big></big></td>
       <td style="vertical-align: middle; width: 883px; text-align: left;"><big><big><big><span style="font-weight: bold;"><span style="color: rgb(0, 0, 102);">Cloud
-Profile Manager</span></span></big></big></big></td>
+Profile Manager</span></span></big></big></big></td>	
+	
     </tr>
+    
   </tbody>
 </table>
 
@@ -32,6 +34,20 @@ Profile Manager</span></span></big></big></big></td>
 <form method="post" action="csp_detail.html" name="csp_list">
   <table style="text-align: left; width: 995px; height: 43px;" border="0" cellpadding="2" cellspacing="2">
     <tbody>
+Select and edit for CAIQ Assessment 
+ <tr>
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> 
+        </td>
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> Cloud Provider
+        </td>
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> Type 
+        </td>
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> EndPoint URL 
+        </td>
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> CAIQ Score <br> E(t,c,f) 
+        </td>
+        </tr> 
+        
 	{% for profile in all_profile %} 
       <tr>
         <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> 
@@ -51,25 +67,17 @@ Profile Manager</span></span></big></big></big></td>
        	{{profile.endpoint_text}}
        	</td>
        	<td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
-       	{{profile.caiq_score}}
+       	{{profile.caiq_score|floatformat:"4"}}
        	</td>
+       	      <td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
+       
        	
+       <a href="{% url 'polls:import_sheet' profile.id %}">	Edit
        	
-       	 <!--  	<input type= readonly="readonly" name="{{profile.name_text}}" value="{{profile.name_text}}">
-        </td>
-        <td style="vertical-align: middle; width: 186px; height: 39px;">
-        	<input value="{{profile.meta_text}}" name="{{profile.meta_text}}">
-        </td>
-        <td style="vertical-align: middle; width: 186px; height: 39px;">
-        	<input readonly="readonly" name="{{profile.endpoint_text}}" value="{{profile.endpoint_text}}">
-        </td>
-        <td style="vertical-align: middle; width: 186px; height: 39px;">
-        	<input readonly="readonly" name="{{profile.caiq_score}}" value="{{profile.caiq_score}}">
-        </td>
-         -->
-         
+       	</td> 	         
       </tr>
   	{%endfor%}
+   
    
    </tbody>
   </table>
