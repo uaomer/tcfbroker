@@ -81,13 +81,13 @@ def cspdetail(request, profile_id):
    # iaas_resources = Resource.objects.filter(cloud=profile_id).filter(rtype='IaaS').count()
    # paas_resources = Resource.objects.filter(cloud=profile_id).filter(rtype='PaaS').count()
    # saas_resources = Resource.objects.filter(cloud=profile_id).filter(rtype='SaaS').count()
-   
+    
     total_assessment = Assessment.objects.filter(acloud=profile_id).count()
-
+ 
     yes_assessment = Assessment.objects.filter(acloud=profile_id).filter(ayes='X').count() # Answered Yes 
     no_assessment= Assessment.objects.filter(acloud=profile_id).filter(ano='X').count() # Answered No 
     na_assessment = Assessment.objects.filter(acloud=profile_id).filter(ana='X').count() # Answered Not Application 
-        
+         
     una_assessment =  total_assessment - (yes_assessment + no_assessment + na_assessment) # Never Answered  
     ta_assessment = total_assessment - na_assessment # total applicable 
     
