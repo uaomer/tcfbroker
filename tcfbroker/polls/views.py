@@ -12,7 +12,7 @@ from chartit import DataPool, Chart
 
 
 
-from .models import Choice, Question, Profile, Resource, Assessment, MonthlyWeatherByCity
+from .models import Choice, Question, Profile, Resource, Assessment
 from django.template.context_processors import request
 from pyexcel.sheets import row
 
