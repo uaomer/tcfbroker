@@ -1,84 +1,92 @@
+{% load staticfiles %}
+{% csrf_token %}
+{% load chartit %}
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
+<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">  
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
   
-  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
-  <title>profile</title>
+<script src="/static/jquery-3.2.1.min.js"></script>
+<script src="/static/Highcharts-5.0.12/code/highcharts.js"></script>
+<script src="/static/Highcharts-5.0.12/code/modules/exporting.js"></script>
+  
+  
+  <title>profile</title>  
+</head>
 
-  
-  
-  <style type="text/css"></style>
-</head><body style="height: 242px;">
-{% csrf_token %}
-<table style="text-align: left; width: 494px; height: 144px;" border="0" cellpadding="2" cellspacing="2">
+<body >
 
+<div class="page-header">
+
+<table  style="text-align: left; width: 800px; height: 70px;" border="0" cellpadding="2" cellspacing="2">
   <tbody>
     <tr>
-      <td style="vertical-align: middle; width: 152px; text-align: center;"><img style="width: 110px; height: 123px;" alt="" title="Logo" src="file:///C:/Users/Peterpan/git/tcfbroker/tcfbroker/polls/templates/polls/images/logo.jpg">&nbsp;<big><big><big><span style="font-weight: bold;"> </span></big></big></big></td>
-      <td style="vertical-align: middle; width: 883px; text-align: left;"><big><big><big><span style="font-weight: bold;"><span style="color: rgb(0, 0, 102);">Cloud
-Profile Manager</span></span></big></big></big></td>	
+      <td style="vertical-align: middle; width: 152px; text-align: center;"><img style="width: 110px; height: 123px;" alt="" title="Logo" src="/static/images/logo_tcf.jpg">&nbsp;<big><big><big><span style="font-weight: bold;"> </span></big></big></big></td>
+      <td style="vertical-align: middle; width: 883px; text-align: left;">
+      
+     <h1> <a href="127.0.0.1:8000/polls/profile"> Cloud Profile Manager </a></h1> </td>	
+
 	
     </tr>
     
   </tbody>
 </table>
-
+	</div>
+	
+	
 <br>
 
 <br>
-
-<table>
-
-</table>
 
 {% if all_profile %}
+
+
 <form method="post" action="csp_detail.html" name="csp_list">
-  <table style="text-align: left; width: 995px; height: 43px;" border="0" cellpadding="2" cellspacing="2">
+  <table style="margin-left: auto; margin-right: auto; text-align: left; width: 995px; height: 43px;" border="1" cellpadding="2" cellspacing="2">
     <tbody>
-Select and edit for CAIQ Assessment 
+
+<tr> <td colspan="6" rowspan="1"  style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> Select and submit for Composite Trust Evaluation  </td> </tr>
+
  <tr>
-        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> 
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;">
         </td>
-        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> Cloud Provider
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> Cloud Provider <br> (Click for details)
         </td>
         <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> Type 
         </td>
         <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> EndPoint URL 
         </td>
-        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> CAIQ Score <br> E(t,c,f) 
+        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> Expected Trust Value = E(t,c,f) 
         </td>
         </tr> 
         
 	{% for profile in all_profile %} 
       <tr>
-        <td style="vertical-align: middle; width: 22px; text-align: left; height: 39px;"> 
-        <input name="{{profile.id}}" value="{{profile.id}}" type="checkbox">
+        <td style="vertical-align: middle; width: 22px; text-align: middle; height:25px "> 
+        <input name="{{profile.id}}" value="{{profile.id}}" type="radio">
         </td>
-        <td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
-       
-       	
-       <a href="{% url 'polls:cspdetail' profile.id %}">	{{profile.name_text}}
-       	
+        <td style="vertical-align: middle; width: 150px; text-align: left; ">
+       <a href="{% url 'polls:cspdetail' profile.id %}">	{{profile.name_text}} </a>
        	</td>
        	
-       	<td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
+       	<td style="vertical-align: middle; width: 150px; text-align: left; ">
        	{{profile.meta_text}}
        	</td>
-       	<td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
-       	{{profile.endpoint_text}}
+       	<td style="vertical-align: middle; width: 300px; text-align: left; ">
+       	<a href="{{profile.endpoint_text}}" >{{profile.endpoint_text}}</a>
        	</td>
-       	<td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
-       	{{profile.caiq_score|floatformat:"4"}}
+       	<td style="vertical-align: middle; width: 100px; text-align: left; ">
+       	{{profile.caiq_escore|floatformat:"4"}}
        	</td>
-       	      <td style="vertical-align: middle; width: 186px; text-align: left; height: 39px;">
-       
-       	
-       <a href="{% url 'polls:import_sheet' profile.id %}">	Edit
-       	
-       	</td> 	         
-      </tr>
+        </tr>
   	{%endfor%}
    
-   
+   <tr> <td colspan="6" rowspan="1"  style="vertical-align: middle; width: 22px; text-align: left; height: 39px;">   <input type="submit" value="Submit">
+    </td></tr>
    </tbody>
   </table>
 </form>
@@ -91,5 +99,16 @@ Select and edit for CAIQ Assessment
 <br>
 
 <br>
+
+  
+<div id="container"
+style="margin: 0pt auto; min-width: 310px; height: 400px; max-width: 800px;">  {{ chart|load_charts:"container" }}
+
+</div>
+
+     
+
+</script>
+
 
 </body></html>

@@ -35,7 +35,13 @@ class Profile(models.Model):
     endpoint_text = models.CharField(max_length=200)
     meta_text = models.CharField(max_length=200)
     detail_info = models.TextField(default='')
-    caiq_score= models.FloatField(default=0)
+    caiq_escore= models.FloatField(default=0)
+    caiq_t= models.FloatField(default=0)
+    caiq_c= models.FloatField(default=0)
+    caiq_f= models.FloatField(default=0)
+    caiq_b= models.FloatField(default=0)
+    caiq_d= models.FloatField(default=0)
+    caiq_u= models.FloatField(default=0)
         
     def __str__(self):
         return self.name_text

@@ -32,11 +32,45 @@ def index(request):
     return HttpResponse(template.render(context, request))
   
 def profile(request):
-    all_profile = Profile.objects.order_by('-caiq_score') 
+    all_profile = Profile.objects.order_by('-caiq_escore') 
     template = loader.get_template('polls/profile.html')
+    
+    ds = DataPool(
+       series=
+        [{'options': {
+            'source': Profile.objects.all()},
+          'terms': [
+            'name_text',
+             
+            'caiq_escore']}
+         ])
+ 
+    cht = Chart(
+            datasource = ds, 
+            series_options = 
+              [{'options':{
+                  'type': 'line',
+                  'stacking': False},
+                'terms':{
+                  'name_text': [
+                    'caiq_escore'
+                    ]
+                  }}],
+            chart_options = 
+              {'title': {
+                   'text': 'Trust Rating of CSPs in Federation'},
+               'xAxis': {
+                    'title': {
+                       'text': 'Cloud Service Providers'}}})
+
     context = {
         'all_profile': all_profile,
+        'chart': cht
     }
+    
+
+   # return render_to_response('chartit/chart.html', {'weatherchart':cht})
+    
     return HttpResponse(template.render(context, request))
 
 
@@ -57,7 +91,7 @@ def cspdetail(request, profile_id):
     una_assessment =  total_assessment - (yes_assessment + no_assessment + na_assessment) # Never Answered  
     ta_assessment = total_assessment - na_assessment # total applicable 
     
-    trust_t= yes_assessment / (yes_assessment + no_assessment)
+    trust_t= yes_assessment / (yes_assessment + no_assessment) 
     temp1= ta_assessment * (yes_assessment + no_assessment)
     temp2 = 2*(ta_assessment - (yes_assessment+no_assessment))
        
@@ -89,6 +123,7 @@ def cspdetail(request, profile_id):
     'trust_c':trust_c,
     'trust_f':trust_f,
     'trust_e':trust_e,
+    
     'trust_b':trust_b, 
     'trust_d':trust_d,
     'trust_u':trust_u,  
@@ -96,95 +131,12 @@ def cspdetail(request, profile_id):
     }
         
 #        >>> Publisher.objects.filter(id=1).update(name='Apress Publishing')
-    Profile.objects.filter(id=profile_id).update(caiq_score=trust_e) 
+    Profile.objects.filter(id=profile_id).update(caiq_t=trust_t, 
+                                                 caiq_c=trust_c, 
+                                                 caiq_escore=trust_e, 
+                                                 caiq_f=trust_f,
+                                                 caiq_b=trust_b,  
+                                                 caiq_d=trust_d, 
+                                                 caiq_u=trust_u ) 
     
     return HttpResponse(template.render(context, request))
- 
-#def import_sheet(request, profile_id):
-#     if request.method == "POST":
-#         form = UploadFileForm(request.POST,
-#                               request.FILES)
-#         
-#           
-#         if form.is_valid():
-#             input_excel = request.FILES['file']
-#             book = xlrd.open_workbook(file_contents=input_excel.read())
-#             xl_sheet = book.sheet_by_index(0)
-#         
-#             num_rows = xl_sheet.nrows   # Number of rows
-#             num_cols = xl_sheet.ncols   # Number of columns
-#         
-#             myrow = xl_sheet.row(row)
-#             
-#         mycell = xl_sheet.cell(1,2)
-#             
-#         for row_idx in range(0, num_rows):    # Iterate through rows
-# #                 for col_idx in range(0, num_cols):  # Iterate through columns
-# #                     cell_obj = xl_sheet.cell(row_idx, col_idx)  # Get cell object by row, col
-# #             
-#         #   return render_to_response('polls/test.html', {'cell_obj': cell_obj})
-#             context = {
-#                     'xl_sheet': xl_sheet,
-#                     'myrow': myrow,
-#                     'mycell': mycell,
-#                 }
-# 
-#             template = loader.get_template('polls/test.html')
-#             
-#             return HttpResponse(template.render(context, request))  
-#            # return HttpResponse('Sheet name: %s, row: %s, Cell: %s' %(xl_sheet.name, myrow, mycell))
-# #             
-# #             for row_idx in range(0, num_rows):    # Iterate through rows
-# #                 for col_idx in range(0, num_cols):  # Iterate through columns
-# #                     cell_obj = xl_sheet.cell(row_idx, col_idx)  # Get cell object by row, col
-# #             
-# #             context = {
-# #                     
-# #                     'all_results': all_resources
-# #                     }
-# #             
-# #             return HttpResponse ('Rows: [%s] Columns: [%s]' % (num_rows, num_cols))
-# #             
-#             #return HttpResponse("OK")
-#         
-#         #return HttpResponse('Sheet name: %s' % xl_sheet.name)
-#        
-#         else:
-#             return HttpResponseBadRequest()
-#     else:
-#         form = UploadFileForm()
-#     return render(request, 'polls/upload_form.html', {'form': form})    
-
-
-# 
-# def line(request):
-#     ds = DataPool(
-#        series=
-#         [{'options': {
-#             'source': MonthlyWeatherByCity.objects.all()},
-#           'terms': [
-#             'month',
-#             'houston_temp', 
-#             'boston_temp']}
-#          ])
-# 
-#     cht = Chart(
-#             datasource = ds, 
-#             series_options = 
-#               [{'options':{
-#                   'type': 'line',
-#                   'stacking': False},
-#                 'terms':{
-#                   'month': [
-#                     'boston_temp',
-#                     'houston_temp']
-#                   }}],
-#             chart_options = 
-#               {'title': {
-#                    'text': 'Weather Data of Boston and Houston'},
-#                'xAxis': {
-#                     'title': {
-#                        'text': 'Month number'}}})
-# 
-#     return render_to_response('polls/chart.htm', {'cht':cht})
-#     
